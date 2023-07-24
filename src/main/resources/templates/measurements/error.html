@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Error Page For Measurements </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p th:text="'Problem encountered when using site: ' + ${siteDto.name}" />
+
+            <p th:text="'The error message is: ' + ${errorDto.message}" />
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+</body>
+</html>

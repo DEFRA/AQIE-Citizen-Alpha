@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Measurements Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+    <script type="text/javascript" th:src="@{/js/inputValidation.js}"></script>
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Measurements </h1>
+        </div>
+    </div>
+    <p th:text="'For Site ID ' + ${siteId}" />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/measurements}" th:object="${measurementFormDto}" method="post" onsubmit="return validateTimes()">
+                <input type="hidden" id="siteId" name="siteId" th:value="${siteId}">
+
+                <p>
+                    <label for="fromTime">From:</label>
+                    <input type="datetime-local" id="fromTime" name="fromTime">
+                </p>
+
+                <p>
+                    <label for="toTime">To:</label>
+                    <input type="datetime-local" id="toTime" name="toTime">
+                </p>
+
+                <p><input id="submit" type="submit" value="Submit" /></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+
+</body>
+</html>

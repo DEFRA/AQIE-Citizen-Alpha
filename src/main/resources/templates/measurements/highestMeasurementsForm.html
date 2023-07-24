@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Highest Measurements Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+    <script type="text/javascript" th:src="@{/js/inputValidation.js}"></script>
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Highest Measurements </h1>
+        </div>
+    </div>
+    <p th:text="'For Site ID ' + ${siteId}" />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/highest_measurements}" th:object="${highestMeasurementFormDto}" method="post" onsubmit="return validateInput()">
+                <input type="hidden" id="siteId" name="siteId" th:value="${siteId}">
+
+                <p>
+                    <select class="form-control" id="pollutantCode" name="pollutantCode">
+                        <option value="0">Select a pollutant</option>
+                        <option th:each="pollutantCodeOption : ${pollutantCodeOptions}" th:value="${pollutantCodeOption}" th:text="${pollutantCodeOption}"></option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="fromTime">From:</label>
+                    <input type="datetime-local" id="fromTime" name="fromTime">
+                </p>
+
+                <p>
+                    <label for="toTime">To:</label>
+                    <input type="datetime-local" id="toTime" name="toTime">
+                </p>
+
+                <p><input id="submit" type="submit" value="Submit" /></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+
+</body>
+</html>

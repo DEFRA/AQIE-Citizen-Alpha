@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nearest Sites Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+    <script type="text/javascript" th:src="@{/js/inputValidation.js}"></script>
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Nearest Sites </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/nearestSites}" th:object="${addressDto}" method="post" onsubmit="return validatePostcode()">
+                <p>Postcode: <input id="postcode" type="text" th:field="*{postcode}" oninput="onPostcodeInput(this.value)"/></p>
+                <p><input id="submit" type="submit" value="Submit" /></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+
+</body>
+</html>

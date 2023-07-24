@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OS Vector Maps</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+
+    <link rel="stylesheet" href="https://labs.os.uk/public/os-api-branding/v0.3.1/os-api-branding.css" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" />
+    <link th:href="@{/styles/os_vector_maps.css}" rel="stylesheet" />
+
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> OS Vector Maps </h1>
+        </div>
+    </div>
+    <p th:text="'Easting = ' + ${easting}" />
+    <p th:text="'Northing = ' + ${northing}" />
+
+    <div id="map"></div>
+</div>
+
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+
+<script src="https://labs.os.uk/public/os-api-branding/v0.3.1/os-api-branding.js"></script>
+<script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+<script>
+    const apiKey = 'THE_KEY';
+
+    // Initialize the map object.
+    const map = new maplibregl.Map({
+        container: 'map',
+        minZoom: 6,
+        maxZoom: 18,
+        style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?key=' + apiKey,
+        maxBounds: [
+            [ -10.76418, 49.528423 ],
+            [ 1.9134116, 61.331151 ]
+        ],
+        center: [ -2.968, 54.425 ],
+        zoom: 13,
+        transformRequest: url => {
+            return {
+                url: url + '&srs=3857'
+            }
+        }
+    });
+
+    map.dragRotate.disable(); // Disable map rotation using right click + drag.
+    map.touchZoomRotate.disableRotation(); // Disable map rotation using touch rotation gesture.
+
+    // Add navigation control (excluding compass button) to the map.
+    map.addControl(new maplibregl.NavigationControl({
+        showCompass: false
+    }));
+
+</script>
+
+</body>
+</html>

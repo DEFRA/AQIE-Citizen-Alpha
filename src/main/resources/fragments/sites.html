@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="resultTable">
+    <table class="table">
+        <thead>
+        <tr>
+            <th> UK-AIR ID </th>
+            <th> Name </th>
+            <th> Usage Type </th>
+            <th> Easting </th>
+            <th> Northing </th>
+            <th> Measurements </th>
+            <th> Mapping </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${siteDtos.empty}">
+            <td colspan="2"> No Nearest Sites Available </td>
+        </tr>
+        <tr th:each="siteDto : ${siteDtos}">
+            <td><span th:text="${siteDto.uka_site_id}"> UK-AIR ID </span></td>
+            <td><span th:text="${siteDto.name}"> Name </span></td>
+            <td><span th:text="${siteDto.usage_type}"> Usage Type </span></td>
+            <td><span th:text="${siteDto.easting}"> Easting </span></td>
+            <td><span th:text="${siteDto.northing}"> Northing </span></td>
+            <td>
+                <a th:href="@{'/measurements?siteId=' + ${siteDto.id}}">Show measurements</a>
+                <a th:href="@{'/highest_measurements?siteId=' + ${siteDto.id}}">Show highest measurements</a>
+            </td>
+            <td>
+                <a th:href="@{'/google_mapping?easting=' + ${siteDto.easting} + '&northing=' + ${siteDto.northing}}">GoogleMaps</a>
+                <a th:href="@{'/os_raster_mapping?easting=' + ${siteDto.easting} + '&northing=' + ${siteDto.northing}}">OSMapsAPI</a>
+                <a th:href="@{'/os_vector_mapping?easting=' + ${siteDto.easting} + '&northing=' + ${siteDto.northing}}">OSVectorTileAPI</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

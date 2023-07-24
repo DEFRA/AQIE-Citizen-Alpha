@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="resultTable">
+    <table class="table">
+        <thead>
+        <tr>
+            <th> Sampled Time </th>
+            <th> Ozone (µgm-3) </th>
+            <th> Sulphur Dioxyde (µgm-3) </th>
+            <th> Nitrogen Dioxyde (µgm-3) </th>
+            <th> PM10 (µgm-3) </th>
+            <th> PM2.5 (µgm-3) </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${measurementDtos.empty}">
+            <td colspan="6"> No Measurements Available </td>
+        </tr>
+        <tr th:each="measurementDto : ${measurementDtos}">
+            <td><span th:text="${measurementDto.sampledTime}"> Sampled Time </span></td>
+            <div th:with="pollutantCodeQuantityMap=${measurementDto.pollutantCodeQuantityMap}">
+                <td><span th:text="${pollutantCodeQuantityMap.OZONE}"> Ozone (µgm-3) </span></td>
+                <td><span th:text="${pollutantCodeQuantityMap.SULPHUR_DIOXIDE}"> Sulphur Dioxyde (µgm-3) </span></td>
+                <td><span th:text="${pollutantCodeQuantityMap.NITROGEN_DIOXIDE}"> Nitrogen Dioxyde (µgm-3) </span></td>
+                <td><span th:text="${pollutantCodeQuantityMap.PM10}"> PM10 (µgm-3) </span></td>
+                <td><span th:text="${pollutantCodeQuantityMap.PM2DOT5}"> PM2.5 (µgm-3) </span></td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

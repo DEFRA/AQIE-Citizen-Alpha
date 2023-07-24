@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Air Quality: POC App using progressive enhancement</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <th:block th:insert="~{../fragments/govuk :: headerfiles}"></th:block>
+</head>
+<body>
+<header th:insert="~{../fragments/govuk :: header}"> </header>
+
+<a href="/">Home</a>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<p>Get your greeting <a href="/greeting">here</a></p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+<p><a href="/sites">Sites</a> | <a href="/nearestSites">NearestSites</a> | <a href="/greeting">NearestAirQuality</a></p>
+<div th:replace="~{../fragments/govuk :: footer}"></div>
+</body>
+</html>
