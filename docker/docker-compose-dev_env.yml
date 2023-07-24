@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: aqiepostgres
+    image: brossierp/aqiepostgres:0.0.1
+    ports:
+      - "${EX_POSTGRES_PORT}:5432"
