@@ -1,5 +1,5 @@
 # To build
-cd /Users/philippebrossier/code/airqualitylimitedjs
+cd project_root
 mvn clean install
 
 # To run
@@ -8,7 +8,7 @@ mvn clean install
 Define a Run Configuration with:
 - main class = com.example.airqualitylimitedjs.AirqualitypocApplication
 - environment variables:
-    - spring.profiles.active=localwithpostgre
+    - spring.profiles.active=localwithh2
     - OS_MAPPING_KEY = THE_KEY
 
 ## Command line

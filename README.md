@@ -1,5 +1,5 @@
 # AQIE-Citizen-Alpha
-AQIE = Air Quality and Industrial Emissions. This is the prototype for our Citizen service.
+AQIE = Air Quality and Industrial Emissions. This is the alpha prototype for our Citizen service.
 
 ## Backend
 Controllers returning a View have a name prefixed with Display.
@@ -13,11 +13,10 @@ https://www.thymeleaf.org/
 ## TODO
 Add html pages: 
     - Page 4 = Nearest air quality to a postcode. 1 text field = Postcode and 1 Submit button.
-        - Once submitted, add a table listing air qualities. Cols = Index, Area.
+        - Once submitted, add a table listing air qualities. Cols = AirQualityIndex, Area.
 
 Add a reCAPTCHA.
 
 Unit tests for inputValidation.js
 
-Dockerise the app. Mirror what was done with the 1st poc project.
-
+Dockerise the app.
