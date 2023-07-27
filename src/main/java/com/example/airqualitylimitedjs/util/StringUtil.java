@@ -19,15 +19,7 @@ public class StringUtil {
     public static String rewriteOSVectorMappingResponse(String inputStr) {
         if (inputStr.contains(ORDNANCE_SURVEY_URL)) {
             String interimString = inputStr.replace(ORDNANCE_SURVEY_URL, OS_VECTOR_MAPPING_PROXY_URL);
-
-            // TODO Below, we assume that the key is always given as the only query parameter in URLs part of the response.
-            // TODO We should make the code more resilient in case another query parameter is provided.
-            int keyPosition = interimString.indexOf("?key=");
-            int firstCharAfterAPIKey = interimString.indexOf('"', keyPosition);
-            // Below we get ?key=THE_KEY
-            String apiKeyNameAndValue = interimString.substring(keyPosition, firstCharAfterAPIKey);
-
-            return interimString.replace(apiKeyNameAndValue, "");
+            return interimString.replace(identifyApiKeyNameAndValue(interimString), "");
         } else {
             return inputStr;
         }
@@ -56,7 +48,7 @@ public class StringUtil {
 
     public static byte[] compress(String input) {
         log.info("Compressing string...");
-        if (input == null || input.length() == 0) {
+        if (input == null || input.isEmpty()) {
             return null;
         }
 
@@ -70,5 +62,28 @@ public class StringUtil {
             log.error("Issue encountered while compressing String to byte array.", e);
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * This identifies key=API_KEY in interimString.
+     *
+     * It assumes that key=API_KEY can appear in the following 3 forms:
+     * - ...?key=THE_KEY"
+     * - ...?key=THE_KEY&aParam=random"
+     * - ...?aParam=random&key=THE_KEY"
+     */
+    private static String identifyApiKeyNameAndValue(String interimString) {
+        int keyNamePosition = interimString.indexOf("key=");
+        int firstDoubleQuoteAfterAPIKey = interimString.indexOf('"', keyNamePosition);
+        int firstAndCharAfterAPIKey = interimString.indexOf('&', keyNamePosition);
+
+        String result;
+        if (firstAndCharAfterAPIKey == -1 || (firstAndCharAfterAPIKey > 0 && firstAndCharAfterAPIKey > firstDoubleQuoteAfterAPIKey)) {
+            result = interimString.substring(keyNamePosition, firstDoubleQuoteAfterAPIKey);
+        } else {
+            result = interimString.substring(keyNamePosition, firstAndCharAfterAPIKey);
+        }
+
+        return result;
     }
 }
