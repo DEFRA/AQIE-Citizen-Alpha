@@ -24,6 +24,13 @@ To run the container from our image:
 - PostgreSQL profile: docker run -e spring.profiles.active=localdockerwithpostgre -e OS_MAPPING_KEY=THE_KEY -p8080:8080 airqualitylimitedjs:latest
     - Prerequisite = Start the PostgreSQL container.
 
+## To get code coverage
+I followed https://www.baeldung.com/jacoco
+
+Running 'mvn clean install jacoco:report', you get:
+- a coverage report in binary format in the target directory, target/jacoco.exec. This can be interpreted by Sonar Qube.
+- a readable code coverage report at target/site/jacoco/index.html
+
 ## References
 https://www.thymeleaf.org/
 
