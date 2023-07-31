@@ -1,7 +1,10 @@
 package com.example.airqualitylimitedjs.service;
 
+import com.example.airqualitylimitedjs.domain.LocationPoint;
 import com.example.airqualitylimitedjs.domain.PostcodeApiResponse;
+import com.example.airqualitylimitedjs.domain.PostcodeDetails;
 import com.example.airqualitylimitedjs.exception.LocationException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -58,6 +61,28 @@ public class PostcodeServiceTest {
             LocationException exception = assertThrows(LocationException.class, () -> postcodeService.getLocationPoint("a"));
             assertEquals(HttpStatusCode.valueOf(500), exception.getHttpStatusCode());
             assertEquals("Unexpected apiResponse: PostcodeApiResponse(status=500, result=null)", exception.getMessage());
+        }
+
+        @Test
+        public void givenAPIReturnsNonNullResult_expectLocationPoint() throws LocationException {
+            int length = 10;
+            boolean useLetters = true;
+            boolean useNumbers = false;
+            final String postcode = RandomStringUtils.random(length, useLetters, useNumbers);
+
+            PostcodeApiResponse apiResponse = new PostcodeApiResponse();
+            PostcodeDetails postcodeDetails = new PostcodeDetails();
+            final Double eastings = Math.random();
+            postcodeDetails.setEastings(eastings);
+            final Double northings = Math.random();
+            postcodeDetails.setNorthings(northings);
+            apiResponse.setResult(postcodeDetails);
+            when(restTemplate.getForObject("https://api.postcodes.io/postcodes/" + postcode, PostcodeApiResponse.class)).thenReturn(apiResponse);
+
+            final LocationPoint result = new LocationPoint();
+            result.setEasting(eastings);
+            result.setNorthing(northings);
+            assertEquals(result, postcodeService.getLocationPoint(postcode));
         }
     }
 }
