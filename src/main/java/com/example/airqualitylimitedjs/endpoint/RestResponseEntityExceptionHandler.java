@@ -1,6 +1,7 @@
 package com.example.airqualitylimitedjs.endpoint;
 
 import com.example.airqualitylimitedjs.dto.ErrorDto;
+import com.example.airqualitylimitedjs.exception.AirQualityNotFoundException;
 import com.example.airqualitylimitedjs.exception.LocationException;
 import com.example.airqualitylimitedjs.exception.MeasurementNotFoundException;
 import com.example.airqualitylimitedjs.exception.SiteNotFoundException;
@@ -21,6 +22,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = { MeasurementNotFoundException.class })
     protected ResponseEntity<ErrorDto> handleMeasurementNotFoundException(MeasurementNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(buildErrorDto(ex), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = { AirQualityNotFoundException.class })
+    protected ResponseEntity<ErrorDto> handleAirQualityNotFoundException(AirQualityNotFoundException ex, WebRequest request) {
         return new ResponseEntity<>(buildErrorDto(ex), HttpStatus.NOT_FOUND);
     }
 
